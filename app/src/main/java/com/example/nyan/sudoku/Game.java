@@ -36,6 +36,9 @@ public class Game extends AppCompatActivity {
         puzzleView = new PuzzleView(this);
         setContentView(puzzleView);
         puzzleView.requestFocus();
+
+        // If the activity is restarted, do a continue next time
+        getIntent().putExtra(KEY_DIFFICULTY, DIFFICULTY_CONTINUE);
     }
 
     protected void showKeypadOrError(int x,int y){
@@ -135,6 +138,9 @@ public class Game extends AppCompatActivity {
         String puz="";
         //TODO: Continue Last Game
         switch (diff){
+            case DIFFICULTY_CONTINUE:
+                puz=getPreferences(MODE_PRIVATE).getString(PREF_PUZZLE,easyPuzzle);
+                break;
             case DIFFICULTY_HARD:
                 puz = hardPuzzle;
                 break;
@@ -190,6 +196,13 @@ public class Game extends AppCompatActivity {
     @Override
     protected void onPause(){
         super.onPause();
+        Log.d(TAG,"onPause");
         Music.stop(this);
+
+        //Save the current puzzle
+        getPreferences(MODE_PRIVATE).edit().putString(PREF_PUZZLE,toPuzzleString(puzzle)).commit();
     }
+
+    private static final String PREF_PUZZLE = "puzzle";
+    protected static final int DIFFICULTY_CONTINUE = -1;
 }
