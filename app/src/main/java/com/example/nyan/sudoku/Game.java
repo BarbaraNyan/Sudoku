@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import java.util.Random;
+
 /**
  * Created by NYAN on 08.01.2019.
  */
@@ -171,5 +173,23 @@ public class Game extends AppCompatActivity {
             return "";
         else
             return String.valueOf(v);
+    }
+    private int music[] = {R.raw.one,R.raw.two,R.raw.three};
+
+    private int setRandomMusic(){
+        Random r = new Random();
+        int m = r.nextInt(music.length);
+        return m;
+    }
+    @Override
+    protected void onResume(){
+        super.onResume();
+        int m = setRandomMusic();
+        Music.play(this,music[m]);
+    }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        Music.stop(this);
     }
 }

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AnimationUtils;
 
 /**
  * Created by NYAN on 08.01.2019.
@@ -187,6 +188,7 @@ public class PuzzleView extends View {
             else{
                 // Number is not valid for this tile
                 Log.d(TAG, "setSelectedTile: invalid: " + tile);
+                startAnimation(AnimationUtils.loadAnimation(game,R.anim.shake));
             }
         }
     }
